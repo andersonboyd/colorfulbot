@@ -7,25 +7,19 @@ const app = express();
 app.use(express.static("public"));
 
 app.all(`/${process.env.BOT_ENDPOINT}`, function(req, res){
-    var colorId = helper.randomColor().toString().join(",");
-    var name;
-    var img;
-    console.log(colorId);
-    app.get("https://thecolorapi.com/id?rgb=" + colorId +"&format=JSON", function(err, data){
-        if (err) throw err;
-        console.log(data);
-        name = data.name.value;
-        img = data.image.bare;
-    }).then(function(err, response){
-        twitter.postColor(name, img, function(err, data){
-            if(err){
-                console.log(err);
-                res.status(500).send();
-            }else{
-                res.status(200).send();
-            }
-        })
-    });
+    var data = helper.getColor(app);
+    var name = data.name.value;
+    var img = data.img.bare;
+    twitter.postColor(name, img, function(err, cb){
+        if(err){
+            console.log(err);
+            cb(err);
+            res.status(500).send();
+        }else{
+            cb(null);
+            res.status(200).send();
+        }
+    })
 });
 
 var listener = app.listen(process.env.PORT, function(){
