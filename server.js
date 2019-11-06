@@ -1,7 +1,7 @@
 require("dotenv").config();
 const express = require("express");
-const helper = require("./helper.js");
-const twitter = require("./twitter.js");
+const helper = require("./helper");
+const twitter = require("./twitter");
 const app = express();
 
 app.use(express.static("public"));
