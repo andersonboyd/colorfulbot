@@ -7,9 +7,8 @@ module.exports = {
         };
         return colorArr;
     },
-    getColor: function(app){
-        var colorId = helper.randomColor().split(",").toString().join(",");
-        app.get(`https://thecolorapi.com/id?rgb=${colorId}&format=JSON`, function(err, data){
+    getColor: function(app, id){
+        app.get(`https://thecolorapi.com/id?rgb=${id}&format=JSON`, function(err, data){
             if (err){
                 console.log(err.stack);
                 res.status(500).send();

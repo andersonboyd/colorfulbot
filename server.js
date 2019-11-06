@@ -7,7 +7,8 @@ const app = express();
 app.use(express.static("public"));
 
 app.all(`/${process.env.BOT_ENDPOINT}`, function(req, res){
-    var data = helper.getColor(app);
+    var id = helper.randomColor().split(",").toString().join(",");
+    var data = helper.getColor(app, id);
     var name = data.name.value;
     var img = data.img.bare;
     twitter.postColor(name, img, function(err, cb){
