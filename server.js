@@ -25,7 +25,7 @@ app.all(`/${process.env.BOT_ENDPOINT}`, function(req, res){
         console.log(svg);
         svg2png(svg, {width: 360, height: 360})
             .then(function(buffer){
-                fs.writeFile(`/assets/${name}.png`, buffer);
+                fs.writeFile(`./assets/${name}.png`, buffer);
                 helper.loadImageAssets(function(err, asset_urls){
                     if(err){
                         console.log(err);
